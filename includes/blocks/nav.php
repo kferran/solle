@@ -1,5 +1,4 @@
 <div id="header">
-    <div id="header_top"></div>
     <div id="header_center" class="cf">
         <a href="/home.php"><img id="header_logo" src="<?php echo $base_path; ?>images/solle_logo_header.png"/></a>
         <ul id="header_links_list" class="cf">

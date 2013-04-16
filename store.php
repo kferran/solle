@@ -27,9 +27,12 @@
                             <li>
                                 <span>Quantity:</span>
                                 <select name="quantity" ng-model="product.product_quantity" ng-options="n for n in quantity"></select>
+                            </li>
+                            <li>
                                 <a class="btn" ng-click="addItem($event,product); status='active'">
                                     <img ng-src="<?php echo $base_path; ?>/images/products/buttons/add-btn.png" alt="">
                                 </a>
+                                <a href="/store/cart.php">Checkout</a>
                             </li>
                         </ul>
                         </form>
@@ -47,12 +50,15 @@
                                 <span>Price:</span><small>${{product.retailPrice}}</small>
                                 <a href="#" ng-hide="loginService.getUserType().name == 'Member' || loginService.getUserType().id >= 10" ng-click="becomeMember($event)">You could save 15%!</a>
                             </li>
-                            <li>
+                             <li>
                                 <span>Quantity:</span>
                                 <select name="quantity" ng-model="product.product_quantity" ng-options="n for n in quantity"></select>
-                                <a class="btn" id="{{product.productId}}" ng-click="basket.add(product); status='active'">
-                                    <img src="<?php echo $base_path; ?>/images/products/buttons/add-btn.png" alt="">
+                            </li>
+                            <li>
+                                <a class="btn" ng-click="addItem($event,product); status='active'">
+                                    <img ng-src="<?php echo $base_path; ?>/images/products/buttons/add-btn.png" alt="">
                                 </a>
+                                <a href="/store/cart.php">Checkout</a>
                             </li>
                         </ul>
                         </form>
@@ -73,9 +79,12 @@
                             <li>
                                 <span>Quantity:</span>
                                 <select name="quantity" ng-model="product.product_quantity" ng-options="n for n in quantity"></select>
-                                <a class="btn" id="{{product.productId}}" ng-click="basket.add(product); status='active'">
+                            </li>
+                            <li>
+                                <a class="btn" ng-click="addItem($event,product); status='active'">
                                     <img ng-src="<?php echo $base_path; ?>/images/products/buttons/add-btn.png" alt="">
                                 </a>
+                                <a href="/store/cart.php">Checkout</a>
                             </li>
                         </ul>
                         </form>
@@ -93,12 +102,15 @@
                                 <span>Price:</span><small>${{product.retailPrice}}</small>
                                 <a href="#" ng-hide="loginService.getUserType().name == 'Member' || loginService.getUserType().id >= 10" ng-click="becomeMember($event)">You could save 15%!</a>
                             </li>
-                            <li>
+                             <li>
                                 <span>Quantity:</span>
                                 <select name="quantity" ng-model="product.product_quantity" ng-options="n for n in quantity"></select>
-                                <a class="btn" id="{{product.productId}}" ng-click="basket.add(product); status='active'">
+                            </li>
+                            <li>
+                                <a class="btn" ng-click="addItem($event,product); status='active'">
                                     <img ng-src="<?php echo $base_path; ?>/images/products/buttons/add-btn.png" alt="">
                                 </a>
+                                <a href="/store/cart.php">Checkout</a>
                             </li>
                         </ul>
                         </form>

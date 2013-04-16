@@ -52,7 +52,6 @@ var MembershipCtrl = function($scope, $http, countriesService, membershipService
 
     $scope.register = function($event, usertype){
         $event.preventDefault();
-        // console.log("User Type " + usertype);
 
         $scope.customer = {
             'firstName' : $scope.firstName,
@@ -66,10 +65,6 @@ var MembershipCtrl = function($scope, $http, countriesService, membershipService
 
         if ( loginService.is_logged_in() )
         {
-            // loginService.get_username().then(function(response){
-            //     $scope.username = response.data;
-            // });
-            console.log($scope.username);
             membershipService.updateUser($scope.customer, $scope.username).then(function(response){
                 if ( response.updateSuccess == 'true'){
                     loginService.login($scope.username, $scope.password).then(function(response){

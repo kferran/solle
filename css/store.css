@@ -1,0 +1,516 @@
+.vegurbold {
+  font-family: VegurBold;
+}
+.vegurregular {
+  font-family: VegurRegular;
+}
+.vegurlight {
+  font-family: VegurLight;
+}
+.vegurmedium {
+  font-family: VegurMedium;
+}
+.shadow {
+  -moz-box-shadow: 0px 15px 25px 5px #ccc;
+  -webkit-box-shadow: 0px 15px 25px 5px #ccc;
+  box-shadow: 0px 15px 25px 5px #ccc;
+}
+.input_shadow {
+  -webkit-box-shadow: inset 2px 2px 2px 0px #dddddd;
+  -moz-box-shadow: inset 2px 2px 2px 0px #dddddd;
+  box-shadow: inset 2px 2px 2px 0px #dddddd;
+}
+.overlay {
+  background-color: #ffffff;
+  opacity: 0.6;
+}
+.ng-cloak {
+  /* this will change to block when scope and angular is ready */
+
+  display: none;
+}
+.ng-cloak {
+  /* this will change to block when scope and angular is ready */
+
+  display: none;
+}
+/*Main Content sections. Products*/
+.columns {
+  width: 960px;
+  margin: 0 auto;
+  padding-top: 0px;
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 30px;
+}
+.columns .left {
+  float: left;
+  width: 220px;
+  padding: 0 10px;
+}
+.columns .left h3 {
+  font-family: VegurBold;
+  color: #666666;
+  font-size: 16px;
+  margin-bottom: 5px;
+}
+.columns .left ul {
+  margin-bottom: 20px;
+}
+.columns .left ul li {
+  margin-bottom: 5px;
+  font-family: VegurRegular;
+  color: #666666;
+}
+.columns .right {
+  float: left;
+  width: 716px;
+}
+.columns .right .product {
+  width: 215px;
+  float: left;
+  margin-right: 20px;
+  margin-bottom: 50px;
+  position: relative;
+  display: block;
+  min-height: 500px;
+}
+.columns .right .product img {
+  border: 1px solid #a7a7a7;
+  margin-bottom: 10px;
+  position: relative;
+}
+.columns .right .product .active {
+  opacity: .7;
+  background: url("../../images/products/check.png") center center no-repeat #000000;
+  height: 202px;
+  position: absolute;
+  width: 202px;
+  z-index: 10;
+  -webkit-box-shadow: 0px 0px 4px #000;
+  -moz-box-shadow: 0px 0px 4px  #000;
+  box-shadow: 0px 0px 4px  #000;
+  transition: all 0.5s ease;
+  -o-transition: all 0.5s ease;
+  -moz-transition: all 0.5s ease;
+  -webkit-transition: all 0.5s ease;
+}
+.columns .right .product h4 {
+  font-family: VegurBold;
+  font-size: 14px;
+  color: #3e3e3e;
+  margin-bottom: 10px;
+}
+.columns .right .product h4 small {
+  font-size: 8px;
+  vertical-align: top;
+}
+.columns .right .product p {
+  font-family: VegurRegular;
+  font-size: 12px;
+  line-height: 1.4em;
+  color: #3e3e3e;
+  padding-bottom: 15px;
+  border-bottom: 2px dotted #dadada;
+  margin-bottom: 15px;
+}
+.columns .right .product a {
+  display: inline-block;
+  font-family: VegurBold;
+  color: #009ec3;
+}
+.columns .right .product ul li {
+  color: #6e6e6e;
+  font-family: VegurRegular;
+  margin-bottom: 10px;
+}
+.columns .right .product ul li span {
+  color: #393939;
+  font-family: VegurBold;
+  margin-right: 4px;
+  font-weight: normal;
+  font-size: 14px;
+}
+.columns .right .product ul li small {
+  font-size: 13px;
+}
+.columns .right .product ul li a {
+  color: #529021;
+  text-decoration: underline;
+  font-size: 13px;
+  font-family: VegurBold;
+}
+.columns .right .product ul li select {
+  width: 50px;
+  margin-right: 5px;
+}
+.columns .right .product ul li a.btn {
+  margin: 0;
+  padding: 0;
+}
+.columns .right .product ul li a.btn img {
+  border: none;
+  margin: 0;
+  vertical-align: middle;
+}
+/*Main Content sections. Products*/
+/*shipping form */
+#billing {
+  width: 100%;
+  float: left;
+}
+#billing .details {
+  float: left;
+  background: #c3d600;
+}
+#billing .details h2 {
+  font-family: VegurBold !important;
+  color: #454545 !important;
+  font-size: 18px !important;
+  position: relative;
+  top: -30px;
+}
+#billing .details fieldset {
+  padding-bottom: 50px;
+}
+#billing .details fieldset span#required {
+  font-style: italic;
+  padding-bottom: 10px;
+  text-align: center;
+  display: block;
+}
+#billing .details fieldset div {
+  font-family: VegurBold;
+  font-size: 12px;
+  color: #4a4a4a;
+  clear: both;
+  margin: 5px;
+}
+#billing .details fieldset div label {
+  float: left;
+  width: 9em;
+  text-align: right;
+  margin-right: 1em;
+  display: block;
+  padding-top: 10px;
+}
+#billing .details fieldset div input {
+  padding: 0.15em;
+  width: 15em;
+  border: 1px solid #ddd;
+}
+#billing .shipping {
+  width: 38%;
+  margin-right: 5px;
+  margin-bottom: 20px;
+}
+#billing .method {
+  width: 21%;
+}
+#billing .method ul {
+  margin: 25px  auto 10px auto;
+  width: 150px;
+}
+#billing .method ul li {
+  font-family: VegurBold;
+  font-size: 12px;
+  color: #4a4a4a;
+  margin-top: 20px;
+}
+#billing .method ul li input[type=radio] {
+  float: left;
+}
+#billing .method ul li label {
+  padding-top: 5px;
+  display: block;
+}
+#billing .payment {
+  width: 40%;
+  float: right;
+}
+#billing .payment padding:10px label {
+  float: left;
+  width: 14em;
+  text-align: right;
+  margin-right: 1em;
+}
+#billing .payment .city {
+  color: red;
+}
+#billing .payment input[type=text] {
+  padding: 0.15em;
+  width: 15em;
+  border: 1px solid #ddd;
+}
+#billing .payment ul#credit_card {
+  position: relative;
+  top: -25px;
+  left: 20px;
+  width: 150px;
+}
+#billing .payment ul#credit_card li {
+  font-family: VegurBold;
+  font-size: 12px;
+  color: #4a4a4a;
+  margin-top: 20px;
+}
+#billing .payment ul#credit_card li input[type=radio] {
+  float: left;
+}
+#billing .payment ul#credit_card li label {
+  padding-top: 5px;
+  display: block;
+}
+#billing .payment ul#gift_card {
+  position: relative;
+  top: -10px;
+  left: 20px;
+  width: 150px;
+}
+#billing .payment ul#gift_card li {
+  font-family: VegurBold;
+  font-size: 12px;
+  color: #4a4a4a;
+  margin-top: 20px;
+}
+#billing .payment ul#gift_card li input[type=radio] {
+  float: left;
+}
+#billing .payment ul#gift_card li label {
+  padding-top: 5px;
+  display: block;
+}
+#billing .payment .gift_cart_form {
+  position: relative;
+  bottom: 0;
+}
+#billing .payment .gift_cart_form button#gift_card {
+  float: right;
+  background: #009ec3;
+  border: 0;
+  color: #fff;
+  font-family: VegurBold;
+  padding: 4px 5px;
+  margin-right: 50px;
+}
+#billing .payment .gift_cart_form button#gift_card:hover {
+  cursor: pointer;
+}
+#calculate button {
+  float: right;
+  background: #009ec3;
+  border: 0;
+  color: #fff;
+  font-family: VegurBold;
+  padding: 5px 10px;
+}
+#calculate button:hover {
+  cursor: pointer;
+}
+#calculate button:disabled {
+  opacity: .6;
+}
+#calculate button:disabled:hover {
+  cursor: wait;
+}
+.totals {
+  float: right;
+  width: 260px !important;
+}
+.totals h3 {
+  margin-left: 30px;
+}
+.totals ul {
+  float: right;
+  font-family: VegurRegular;
+  color: #4a4a4a;
+}
+.totals ul li {
+  margin-bottom: 5px;
+}
+.totals ul .total {
+  font-family: VegurBold;
+  color: #4a4a4a;
+  font-size: 15px;
+}
+.totals button#complete_order {
+  padding: 0;
+  margin: 0;
+  height: 24px;
+  border: 0;
+  margin-top: 30px;
+}
+.totals button#complete_order:hover {
+  cursor: pointer;
+}
+.totals .labels {
+  margin-right: 40px;
+  margin-left: 20px;
+}
+.totals button {
+  float: right;
+}
+/*Cart*/
+/* Cart */
+#cart #cart_header {
+  border-bottom: 1px solid #9e9e9e;
+  overflow: hidden;
+  padding-bottom: 20px;
+}
+#cart #cart_header h1 {
+  font-family: VegurBold;
+  color: #454545;
+  font-size: 48px;
+  float: left;
+}
+#cart #cart_header #cart_image {
+  float: right;
+  display: block;
+}
+#cart table {
+  width: 100%;
+}
+#cart table thead tr {
+  border-bottom: 1px solid #9e9e9e;
+}
+#cart table thead tr th {
+  font-family: VegurBold;
+  color: #454545;
+  padding: 10px;
+  text-align: left;
+}
+#cart table tbody tr {
+  border-bottom: 1px solid #9e9e9e;
+}
+#cart table tbody tr td {
+  padding: 15px;
+  padding-left: 15px;
+  font-family: VegurRegular;
+  color: #454545;
+}
+#cart table tbody tr td img {
+  vertical-align: middle;
+}
+#cart table tbody tr td img:hover {
+  cursor: pointer;
+}
+#cart table tbody tr td .product_quantity {
+  width: 20%;
+}
+#cart #cart_footer {
+  padding: 30px 0;
+  float: right;
+  margin-bottom: 50px;
+}
+#cart #cart_footer ul {
+  overflow: hidden;
+  display: block;
+}
+#cart #cart_footer ul li {
+  float: left;
+  padding: 0 10px;
+  font-family: VegurRegular;
+  color: #454545;
+}
+#cart #cart_footer ul li span {
+  font-family: VegurBold;
+  font-size: 18px;
+}
+#cart #cart_footer button {
+  margin-top: 20px;
+  float: right;
+  background: #009ec3;
+  border: 0;
+  color: #fff;
+  font-family: VegurBold;
+  padding: 5px 10px;
+}
+#cart #cart_footer button:hover {
+  cursor: pointer;
+}
+.create_account {
+  margin-top: 20px;
+}
+.create_account img {
+  float: left;
+  margin-right: 25px;
+  margin-bottom: 30px;
+}
+.create_account h1 {
+  font-size: 25px;
+  font-family: VegurLight;
+  color: #454545;
+  margin-bottom: 20px;
+}
+.create_account p {
+  font-family: VegurBold;
+  line-height: 23px;
+  color: #454545;
+  margin-bottom: 30px;
+}
+.create_account a {
+  color: #00aeef;
+  font-family: VegurRegular;
+  text-decoration: underline;
+}
+/* Receipt */
+.receipt_footer {
+  position: relative;
+  padding: 80px 10px 0 25px;
+}
+.receipt_footer .column {
+  /* footer  */
+
+  width: 245px;
+  float: left;
+}
+.receipt_footer .column h3 {
+  font-family: VegurBold;
+  font-size: 18px;
+  color: #454545;
+  padding-bottom: 20px;
+}
+.receipt_footer .column ul {
+  padding-left: 10px;
+}
+.receipt_footer .column ul li {
+  font-size: 14px;
+  font-family: VegurRegular;
+  color: #4a4a4a;
+}
+.receipt_footer .column span {
+  font-family: VegurBold;
+  color: #4a4a4a;
+  font-size: 14px;
+  margin-bottom: 20px;
+  display: block;
+}
+.receipt_footer .column_right {
+  float: right;
+  width: 260px !important;
+}
+.receipt_footer .column_right h3 {
+  margin-left: 30px;
+}
+.receipt_footer .column_right ul {
+  float: left;
+  font-family: VegurRegular;
+  color: #4a4a4a;
+}
+.receipt_footer .column_right ul li {
+  margin-bottom: 5px;
+}
+.receipt_footer .column_right ul .total {
+  font-family: VegurBold;
+  color: #4a4a4a;
+  font-size: 15px;
+}
+.receipt_footer .column_right .labels {
+  margin-right: 40px;
+  margin-left: 20px;
+}
+.category_link {
+  text-decoration: none;
+  font-family: VegurRegular;
+  color: #4a4a4a;
+}
