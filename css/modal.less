@@ -1,0 +1,496 @@
+@import 'variables.less';
+.login_m{
+    form{
+        width:300px;
+        margin:0 auto;
+    }
+    input{
+        padding:8px;
+        min-width:259px;
+        border:1px solid #ccc;
+        margin-bottom:15px;
+    }
+    label{
+        font-family:VegurBold;
+        color:#3e3e3e;
+        font-size:13px;
+        margin-right:10px;
+    }
+    p{
+        color:#575757;
+        font-family: VegurRegular;
+        font-size: 14px;
+        text-align:center;
+        line-height: 19px;
+        .link{
+            color:#199eda;
+            text-decoration: underline;
+            font-family:VegurRegular;
+            font-size:14px;
+        }
+    }
+    a{
+        text-align: center;
+        display: block;
+        margin:10px 0 40px 0;
+    }
+    button{
+        border: 0;
+        background: initial;
+        display: block;
+        margin: 0 auto;
+    }
+    span.help-inline{
+        display: inline-block;
+        margin-bottom: 0;
+        vertical-align: middle;
+        font-style: italic;
+        font-size:12px;
+    }
+}
+.modal{
+    overflow:hidden;
+    width:662px;
+    height:451px;
+    .shadow;
+    .modal_inner{
+        overflow: hidden;
+        .modal_header{
+            background: #c3d600;
+            height:31px;
+            // margin-bottom:20px;
+            h3{
+                float:left;
+                font-family: VegurBold;
+                color:#393939;
+                font-size:15px;
+                margin:9px 0 0 10px;
+            }
+            .close_modal{
+                float: right;
+                padding: 3px 5px;
+                &:hover{
+                    cursor: pointer;
+                }
+            }
+        }
+        #membership{
+            width:652px;
+            padding: 20px 10px;
+             .link{
+                color:#199eda;
+                text-decoration: underline;
+                font-family:VegurRegular;
+                font-size:14px;
+            }
+            p{
+                padding:0px 0px 15px 0;
+                text-align: left !important;
+                .vegurbold;
+                font-size: 13px;
+                color: #4a4a4a;
+            }
+            span{
+                font-family:VegurRegular;
+                font-size:14px;
+                color: #3e3e3e;
+            }
+            .left{
+                float:left;
+                width:228px;
+                margin-left:10px;
+                div{
+                    margin-top:20px;
+                }
+                img{
+                    float:left;
+                    margin-right:10px;
+                }
+                h2{
+                    font-family:VegurBold !important;
+                    font-size:15px !important;
+                    color:#3e3e3e;
+                    padding-top: 5px;
+                }
+                h1{
+                    font-family:VegurBold !important;
+                    font-size:30px !important;
+                    color:#3e3e3e;
+                    margin-bottom: 20px;
+                }
+                p{
+                    font-family:VegurRegular;
+                    line-height:15px;
+                }
+                ul{
+                    list-style-type: disc;
+                    margin-bottom:100px;
+                    margin-left:20px;
+                    margin-top: 10px;
+                    li{
+                        font-family: VegurBold;
+                        font-size:13px;
+                        color:#3e3e3e;
+                        a{
+                            font-family: VegurBold;
+                            font-size:13px;
+                            color:#3e3e3e;
+                        }
+                    }
+                }
+            }
+            #or{
+                float: left;
+                position: relative;
+                top: 115px;
+                margin: 0 30px;
+                // width:15%;
+                h1{
+                    font-family: VegurBold;
+                    font-size:30px;
+                    text-transform: lowercase;
+                    color:#3e3e3e;
+                    font-style: italic;
+                }
+            }
+            .right{
+                width:275px;
+                float:left;
+                 div{
+                    margin-top:20px;
+                }
+                img{
+                    float:left;
+                    margin-right:10px;
+                }
+                h1{
+                    font-family:VegurBold !important;
+                    font-size:33px !important;
+                    color:#3e3e3e;
+                    margin-bottom: 20px;
+                    padding-top: 10px;
+                }
+                p{
+                    font-family:VegurRegular;
+                    line-height:15px;
+                }
+                ul{
+                    list-style-type: disc;
+                    margin-bottom:30px;
+                    margin-left:10px;
+                    margin-top: 10px;
+                    li{
+                        font-family: VegurBold;
+                        font-size:13px;
+                        color:#3e3e3e;
+                        padding-bottom: 5px;
+                         a{
+                            font-family: VegurBold;
+                            font-size:13px;
+                            color:#3e3e3e;
+                        }
+                    }
+                }
+                span{
+                    color:#199eda;
+                }
+            }
+        }
+        #online{
+            // padding: 10px;
+            .left{
+                padding:10px 20px;
+                position: relative;
+                top:60px;
+                width:260px;
+                float: left;
+                div{
+                    margin-top:20px;
+                }
+                img{
+                    float:left;
+                    margin-right:10px;
+                }
+                h2{
+                    font-family:VegurBold !important;
+                    font-size:15px !important;
+                    color:#3e3e3e;
+                    padding-top: 5px;
+                }
+                h1{
+                    font-family:VegurBold !important;
+                    font-size:30px !important;
+                    color:#3e3e3e;
+                    margin-bottom: 20px;
+                }
+                p{
+                    font-family:VegurRegular;
+                    text-align: left;
+                    font-size:14px;
+                    width:240px;
+                    color:#3e3e3e;
+                    line-height:15px;
+                }
+                ul{
+                    list-style-type: disc;
+                    margin-bottom:100px;
+                    margin-left:10px;
+                    margin-top: 20px;
+                    li{
+                        font-family: VegurBold;
+                        font-size:13px;
+                        color:#3e3e3e;
+                    }
+                }
+            }
+            .form{
+                background:#ececec;
+                height:420px;
+                width: 362px;
+                float:left;
+                form{
+                    width: 325px;
+                    margin: 0 auto;
+                    padding-top:30px;
+                    div{
+                        .vegurbold;
+                        font-size:12px;
+                        color:#4a4a4a;
+                        clear:both;
+                        margin:5px;
+                        label{
+                            float: left;
+                            width: 9em;
+                            text-align: right;
+                            margin-right: 1em;
+                            padding-top: 6px;
+                        }
+                        input{
+                            padding: 0.15em;
+                            width: 14em;
+                            border: 1px solid #ddd;
+                            .input_shadow;
+                        }
+                        .ng-dirty.ng-invalid{
+                            background-color: #FA787E;
+                        }
+                    }
+                    p{
+                        margin: 65px 0 30px 0;
+                        .vegurregular;
+                        font-size: 12px;
+                        line-height: 16px;
+                        color: #4a4a4a;
+                        font-weight: normal;
+                    }
+                    span#required{
+                        font-style: italic;
+                        padding-bottom:10px;
+                        text-align: center;
+                        display: block;
+                    }
+                }
+                 button{
+                    display: block;
+                    position: relative;
+                    top: 60px;
+                    left: 130px;
+                    text-align: center;
+                    background:#009ec3;
+                    color:#fff;
+                    width:100px;
+                    padding: 5px;
+                    font-family: VegurBold;
+                    font-size:14px;
+                    border:none;
+                    &:hover{
+                      cursor:pointer;
+                    }
+                    &:disabled{
+                        opacity: 0.4;
+                    }
+                }
+            }
+        }
+        #member{
+            // padding: 10px;
+            .left{
+                padding:10px 20px;
+                position: relative;
+                top:60px;
+                width:260px;
+                float: left;
+                div{
+                    margin-top:20px;
+                }
+                img{
+                    float:left;
+                    margin-right:10px;
+                }
+                h2{
+                    font-family:VegurBold !important;
+                    font-size:15px !important;
+                    color:#3e3e3e;
+                    padding-top: 5px;
+                }
+                h1{
+                    font-family:VegurBold !important;
+                    font-size:30px !important;
+                    color:#3e3e3e;
+                    margin-bottom: 35px;
+                }
+                p{
+                    font-family:VegurRegular;
+                    text-align: left;
+                    font-size:14px;
+                    width:240px;
+                    color:#3e3e3e;
+                }
+                ul{
+                    list-style-type: disc;
+                    margin-bottom:100px;
+                    margin-left:10px;
+                    margin-top: 20px;
+                    li{
+                        font-family: VegurBold;
+                        font-size:13px;
+                        color:#3e3e3e;
+                        a{
+                            font-family: VegurBold;
+                            font-size:13px;
+                            color:#3e3e3e;
+                        }
+                    }
+                }
+            }
+            .form{
+                background:#ececec;
+                height:420px;
+                width: 362px;
+                float:left;
+                form{
+                    width: 325px;
+                    margin: 0 auto;
+                    padding-top:30px;
+                    div{
+                        .vegurbold;
+                        font-size:12px;
+                        color:#4a4a4a;
+                        clear:both;
+                        margin:5px;
+                        label{
+                            float: left;
+                            width: 9em;
+                            text-align: right;
+                            margin-right: 1em;
+                            padding-top: 6px;
+                        }
+                        input{
+                            padding: 0.15em;
+                            width: 14em;
+                            border: 1px solid #ddd;
+                            .input_shadow;
+                        }
+                        span#required{
+                            font-style: italic;
+                            padding-bottom:10px;
+                            text-align: center;
+                            display: block;
+
+                        }
+                    }
+                    p{
+                        margin: 65px 0 30px 0;
+                        .vegurregular;
+                        font-size: 12px;
+                        line-height: 16px;
+                        color: #4a4a4a;
+                        font-weight: normal;
+                    }
+                    span{
+                        .vegurbold;
+                        font-size:12px;
+                        color:#4a4a4a;
+                    }
+                    #username_exists{
+                        color:red;
+                        display: block;
+                        .vegurbold;
+                        font-size:14px;
+                        text-align: center;
+                    }
+                    // .help-inline{
+                    //     color:red;
+                    // }
+                }
+                button{
+                    display: block;
+                    position: relative;
+                    top: 60px;
+                    left: 130px;
+                    text-align: center;
+                    background:#009ec3;
+                    color:#fff;
+                    width:100px;
+                    padding: 5px;
+                    font-family: VegurBold;
+                    font-size:14px;
+                    border:none;
+                    &:hover{
+                      cursor:pointer;
+                    }
+                    &:disabled{
+                        opacity: 0.4;
+                    }
+                }
+            }
+        }
+        #success_content{
+            width:450px;
+            margin:0 auto;
+            text-align: center;
+            padding: 25px;
+            img{
+                margin-bottom: 10px;
+            }
+            h2{
+                font-family: VegurBold !important;
+                color: #acacac;
+
+            }
+            h3{
+                .vegurlight;
+                color: #acacac;
+                font-size: 20px;
+                margin-bottom: 40px;
+            }
+            .link{
+                color:#199eda;
+                text-decoration: underline;
+                font-family:VegurRegular;
+                font-size:14px;
+            }
+        }
+        #login_modal_content{
+            margin-top:30px;
+            .login_m;
+        }
+        #forgot_password_content{
+            margin-top:30px;
+            .login_m;
+        }
+
+        // .left{
+        //     float:left;
+        //     width:40%;
+        // }
+        // .right{
+        //     float:right;
+        //     width:40%;
+        // }
+        // .form{
+        //     float:left;
+        //     width:60%;
+        // }
+    }
+}

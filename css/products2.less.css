@@ -1,0 +1,38 @@
+.vegurbold {
+  font-family: VegurBold;
+}
+.vegurregular {
+  font-family: VegurRegular;
+}
+.vegurlight {
+  font-family: VegurLight;
+}
+.vegurmedium {
+  font-family: VegurMedium;
+}
+.shadow {
+  -moz-box-shadow: 0px 15px 25px 5px #ccc;
+  -webkit-box-shadow: 0px 15px 25px 5px #ccc;
+  box-shadow: 0px 15px 25px 5px #ccc;
+}
+.input_shadow {
+  -webkit-box-shadow: inset 2px 2px 2px 0px #dddddd;
+  -moz-box-shadow: inset 2px 2px 2px 0px #dddddd;
+  box-shadow: inset 2px 2px 2px 0px #dddddd;
+}
+/* Login Modal */
+.forgot_password {
+  display: block;
+  text-align: center;
+  color: #199eda !important;
+  font-weight: normal !important;
+  text-decoration: underline;
+  font-family: VegurRegular;
+  font-size: 14px;
+  margin: 25px 0;
+}
+.modal-backdrop {
+  background: #fff;
+}
+/* Login Modal */
+/* Cart */

@@ -1,0 +1,135 @@
+.vegurbold {
+  font-family: VegurBold;
+}
+.vegurregular {
+  font-family: VegurRegular;
+}
+.vegurlight {
+  font-family: VegurLight;
+}
+.vegurmedium {
+  font-family: VegurMedium;
+}
+.shadow {
+  -moz-box-shadow: 0px 15px 25px 5px #ccc;
+  -webkit-box-shadow: 0px 15px 25px 5px #ccc;
+  box-shadow: 0px 15px 25px 5px #ccc;
+}
+.input_shadow {
+  -webkit-box-shadow: inset 2px 2px 2px 0px #dddddd;
+  -moz-box-shadow: inset 2px 2px 2px 0px #dddddd;
+  box-shadow: inset 2px 2px 2px 0px #dddddd;
+}
+.overlay {
+  background-color: #ffffff;
+  opacity: 0.6;
+}
+.ng-cloak {
+  /* this will change to block when scope and angular is ready */
+
+  display: none;
+}
+/*Login bar*/
+#login_bar_center {
+  width: 960px;
+  margin: auto;
+  height: 40px;
+  background: url("../../images/solle_top_logo.png");
+  background-repeat: no-repeat;
+  background-position: 0px 10px;
+}
+#login_bar_center ul {
+  float: right;
+  padding-top: 6px;
+}
+#login_bar_center ul li {
+  float: left;
+  margin-left: 20px;
+}
+#login_bar_center ul li .login {
+  background: url("../../images/products/buttons/login-btn.png") no-repeat;
+  width: 59px;
+  height: 28px;
+  display: block;
+}
+#login_bar_center ul li .logout {
+  background: url("../../images/products/buttons/logout-btn.png") no-repeat;
+  width: 59px;
+  height: 28px;
+  display: block;
+}
+#login_bar_center ul li .member_btn {
+  background: url("../../images/products/buttons/create_account_up.jpg") no-repeat;
+  width: 126px;
+  height: 26px;
+  display: block;
+}
+#login_bar_center ul li a {
+  color: #fff;
+  font-family: VegurBold;
+  display: block;
+}
+#login_bar_center ul li a:hover {
+  text-decoration: none;
+}
+#login_bar_center ul li a img {
+  vertical-align: middle;
+}
+#login_bar_center ul li a span#cart_count {
+  vertical-align: bottom;
+}
+#login_bar_center ul li #checkout {
+  position: relative;
+  top: 6px;
+}
+#login_bar {
+  width: 100%;
+  background-color: #333333;
+}
+/*Nav section*/
+#upper {
+  width: 960px;
+  margin: auto;
+  padding-top: 30px;
+  padding-bottom: 20px;
+}
+#upper h2 {
+  margin-bottom: 20px;
+  font-family: VegurLight !important;
+  font-size: 22px !important;
+  color: #8E9195;
+}
+#upper p {
+  margin-bottom: 20px;
+  color: #A5A6A6;
+  font-family: Arial;
+  font-size: 14px;
+  line-height: 1.6em;
+}
+#upper h3 {
+  margin-bottom: 20px;
+  font-family: VegurMedium;
+  font-size: 18px;
+  color: #65696E;
+}
+/*Nav section*/
+/*Breadcrumb nav */
+#nav_top {
+  padding-bottom: 10px;
+}
+#nav_top h1 {
+  float: left;
+  font-family: VegurLight;
+  font-size: 22px;
+  color: #65696E;
+}
+#nav_top_links {
+  float: right;
+}
+#nav_top_links a {
+  padding-left: 10px;
+  font-family: VegurBold;
+  font-size: 14px;
+  color: #4C4C4C;
+}
+/*Breadcrumb nav */
