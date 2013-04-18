@@ -139,6 +139,7 @@
   text-decoration: underline;
   font-size: 13px;
   font-family: VegurBold;
+  padding-left: 5px;
 }
 .columns .right .product ul li select {
   width: 50px;

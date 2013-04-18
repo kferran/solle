@@ -3,7 +3,6 @@ class Orbsix{
     private $url = 'https://sollestaging.orbsix.com/rest/v3/index.php?transactionkey=Eqb41V5mEpgVUm6d58QjPjj5WrlRoziv';
     // private $url = 'https://solle.orbsix.com/rest/v3/index.php?transactionkey=0a85fn7zSLoY0rXo4VifJ4bo89P2W317JJ8FiDW2Qzwv1mvko9kk7CFd4ch0zK60';
     // private $key = 'Eqb41V5mEpgVUm6d58QjPjj5WrlRoziv';
-    private $postfields = array(); // fields for API
     private $cart;
     private $relationshipTypes = array(1, 2); //// 1 - SmartPlan Tree, 2 - Mentor Tree, 3 - Member Tree
 
@@ -32,12 +31,12 @@ class Orbsix{
             'SolleMegas' => 'http://sollenaturals.com/solle_megas.php',
             'Solle Essentials - Clarify' => 'http://sollenaturals.com/clarify_oil.php'
         );
-
-        $this->postfields['type'] = 'GetProducts';
+        $data = array();
+        $data['type'] = 'GetProducts';
         foreach ($order_types as $id => $category)
         {
-            $this->postfields['ordertype'] = $id;
-            $response = json_decode($this->curl_request($this->postfields), true);
+            $data['ordertype'] = $id;
+            $response = json_decode($this->curl_request($data), true);
             foreach ($response['Result'] as $index => $product)
             {
                 // not ideal but in a hurry and need to get it done
@@ -68,50 +67,40 @@ class Orbsix{
 
     public function get_user_types()
     {
-        $this->postfields['type'] = 'GetUserTypes';
-        return $this->curl_request($this->postfields);
+        $data = array();
+        $data['type'] = 'GetUserTypes';
+        return $this->curl_request($data);
     }
 
     public function get_gift_card_value($params)
     {
-        $this->postfields['type'] = 'GetGiftCardValue';
-        $this->postfields['giftCardCode'] = $params;
-        return json_decode($this->curl_request($this->postfields),true);
+        $data = array();
+        $data['type'] = 'GetGiftCardValue';
+        $data['giftCardCode'] = $params;
+        return json_decode($this->curl_request($data),true);
     }
 
     public function use_gift_card($params)
     {
-        $this->postfields['type'] = 'UseGiftCard';
-        $this->postfields['giftCardCode'] = $params['card_number'];
-        $this->postfields['order'] = $params['order'];
-
-        return json_decode($this->curl_request($this->postfields),true);
+        $data = array();
+        $data['type'] = 'UseGiftCard';
+        $data['giftCardCode'] = $params['card_number'];
+        $data['order'] = $params['order'];
+        return $this->curl_request($data);
     }
 
     public function process_gift_card($params)
     {
+        $data = array();
         $gift_card_value = $this->get_gift_card_value($params);
-
         if ( $gift_card_value['Result']['value'] != 'false' )
         {
             $this->cart = new Cart();
             $ordernumber = $this->cart->getOrderNumber();
-            if ( !is_null($ordernumber) )
-            {
-
                 //update order with gift card
-                $update_order_response = json_decode($this->update_order($ordernumber, array('details' => array('giftCardCode' => $params))),true);
+                $this->update_order($ordernumber, array('details' => array('giftCardCode' => $params)));
                 // mark gift card as used
-                if ( isset($update_order_response['Result']) && $update_order_response['Result']['updateSuccess'] == true )
-                {
-                    $used_card_response = $this->use_gift_card(array('card_number' => $params, 'order' => $ordernumber));
-                    return $used_card_response['Result']['useSuccess'];
-                }
-            }
-            else
-            {
-                return json_encode(array('error' => 'Unable to find order to update discount.'));
-            }
+                return $this->use_gift_card(array('card_number' => $params, 'order' => $ordernumber));
         }
         else
         {
@@ -121,155 +110,242 @@ class Orbsix{
 
     public function update_order($ordernumber, $params)
     {
-        $this->postfields = array();
-        $this->postfields['type'] = 'UpdateOrder';
-
+        $data = array();
+        $data['type'] = 'UpdateOrder';
         foreach ($params['details'] as $key => $value)
         {
             if ( $key == 'shippingState' ){
-                $this->postfields['shippingState'] = $value['id'];
+                $data['shippingState'] = $value['id'];
                 continue;
             }
 
             if ( $key == 'shippingCountry' ){
-                $this->postfields['shippingCountry'] = $value['id'];
+                $data['shippingCountry'] = $value['id'];
                 continue;
             }
 
-            $this->postfields[$key] = $value;
+            $data[$key] = $value;
         }
-        $this->postfields['order'] = $ordernumber;
-        return $this->curl_request($this->postfields);
+        $data['order'] = $ordernumber;
+        return $this->curl_request($data);
     }
 
     public function process_payment($params)
     {
-        $this->postfields = array();
+        $data = array();
 
-        $this->postfields['type'] = 'CreateOrderPayment';
-        $this->postfields['processPayment'] = true;
-        $this->postfields['billingAddressLine1'] = $params['details']['shippingAddressLine1'];
-        $this->postfields['billingCity'] = $params['details']['shippingCity'];
-        $this->postfields['billingState'] = $params['details']['shippingState']['id'];
-        $this->postfields['billingPostalCode'] = $params['details']['shippingPostalCode'];
-        $this->postfields['billingCountry'] = $params['details']['shippingCountry']['id'];
-        $this->postfields['order'] = $params['order'];
-        $this->postfields['amount'] = $params['total'];
-        $this->postfields['account'] = $params['payment']['credit_card_number'];
-        $this->postfields['month'] = $params['payment']['exp_month'];
-        $this->postfields['year'] = $params['payment']['exp_year'];
-        $this->postfields['cvv'] = $params['payment']['cvv'];
+        $data['type'] = 'CreateOrderPayment';
+        $data['processPayment'] = true;
+        $data['billingAddressLine1'] = $params['details']['shippingAddressLine1'];
+        $data['billingCity'] = $params['details']['shippingCity'];
+        $data['billingState'] = $params['details']['shippingState']['id'];
+        $data['billingPostalCode'] = $params['details']['shippingPostalCode'];
+        $data['billingCountry'] = $params['details']['shippingCountry']['id'];
+        $data['order'] = $params['order'];
+        $data['amount'] = $params['total'];
+        $data['account'] = $params['payment']['credit_card_number'];
+        $data['month'] = $params['payment']['exp_month'];
+        $data['year'] = $params['payment']['exp_year'];
+        $data['cvv'] = $params['payment']['cvv'];
 
-        return $this->curl_request($this->postfields);
+        return $this->curl_request($data);
     }
 
     public function get_states()
     {
-        $this->postfields['type'] = 'GetStates';
-        return $this->curl_request($this->postfields);
+        $data = array();
+        $data['type'] = 'GetStates';
+        return $this->curl_request($data);
     }
 
     public function shipping_types()
     {
-        $this->postfields['type'] = 'GetShippingTypes';
-        return $this->curl_request($this->postfields);
+        $data = array();
+        $data['type'] = 'GetShippingTypes';
+        return $this->curl_request($data);
     }
 
     public function authenticate_user($params)
     {
-        $this->postfields['type'] = 'AuthenticateUser';
-        $this->postfields['username'] = $params['user']['username'];
-        $this->postfields['password'] = $params['user']['password'];
-        return $this->curl_request($this->postfields);
+        $data = array();
+        $data['type'] = 'AuthenticateUser';
+        $data['username'] = $params['user']['username'];
+        $data['password'] = $params['user']['password'];
+        return $this->curl_request($data);
     }
 
     public function password_request($params) // call update user to reset password
     {
-        $this->postfields['type'] = 'UpdateUser';
-        $this->postfields['username'] = $params['user']['username'];
-        $this->postfields['password'] = substr(str_shuffle("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"), 0, 8);
-        return $this->curl_request($this->postfields);
+        $data = array();
+        $data['type'] = 'UpdateUser';
+        $data['username'] = $params['user']['username'];
+        $data['password'] = substr(str_shuffle("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"), 0, 8);
+        return $this->curl_request($data);
     }
 
     public function create_customer($params)
     {
-        $this->postfields['type'] = 'CreateUser';
+        $data = array();
+        $data['type'] = 'CreateUser';
         foreach ($params['customer'] as $key => $value)
-            $this->postfields[$key] = $value;
-        return $this->curl_request($this->postfields);
+            $data[$key] = $value;
+        return $this->curl_request($data);
     }
 
     public function update_user($params)
     {
-        $this->postfields['type'] = 'UpdateUser';
-        foreach ($params['customer'] as $key => $value)
-            $this->postfields[$key] = $value;
-        $this->postfields['username'] = $params['username'];
-        return $this->curl_request($this->postfields);
+        $data = array();
+        $data['type'] = 'UpdateUser';
+        foreach ($params['customer'] as $key => $value){
+            switch ($key) {
+                case 'shippingState':
+                    $data['state'] = $value['id'];
+                    continue;
+                break;
+                case 'shippingCountry':
+                    $data['country'] = $value['id'];
+                    continue;
+                break;
+                case 'shippingPostalCode':
+                    $data['postalcode'] = $value;
+                    continue;
+                break;
+                case 'shippingCity':
+                    $data['city'] = $value;
+                    continue;
+                break;
+
+                default:
+                    $data[$key] = $value;
+                    break;
+            }
+        }
+
+        $data['username'] = $params['username'];
+        return $this->curl_request($data);
     }
 
     public function get_countries()
     {
-        $this->postfields['type'] = 'GetCountries';
-        return $this->curl_request($this->postfields);
+        $data = array();
+        $data['type'] = 'GetCountries';
+        return $this->curl_request($data);
     }
 
-    public function get_user($params)
-    {
-        $this->postfields['type'] = 'GetUser';
-        return $this->curl_request($this->postfields);
+    public function get_user($username)
+    {   
+        $data = array();
+        $data['type'] = 'GetUser';
+        if ( is_array($username) )
+            $username = $username['username'];
+        $data['username'] = $username;
+        return $this->curl_request($data);
     }
 
     public function set_user_relationship($params)
     {
+        $data = array();
         foreach($this->relationshipTypes as $type ){
             if ( $type == 1 )
-                $this->postfields['parentUsername'] = 1;
+                $data['parentUsername'] = 1;
             else
-                $this->postfields['parentUsername'] = $params['parentUsername'];
+                $data['parentUsername'] = $params['parentUsername'];
 
-            $this->postfields['type'] = 'SetUserRelationship';
-            $this->postfields['username'] = $params['username'];
-            $this->postfields['relationshipType'] = $type;
-            $this->curl_request($this->postfields);
+            $data['type'] = 'SetUserRelationship';
+            $data['username'] = $params['username'];
+            $data['relationshipType'] = $type;
+            $this->curl_request($data);
         }
 
-        // return $this->curl_request($this->postfields);
+        // return $this->curl_request($data);
     }
 
-    private function set_smart_plan($params){
-
-    }
     public function check_username($params)
     {
-        $this->postfields['type'] = 'UsernameAvailable';
-        $this->postfields['username'] = $params['username'];
-        return $this->curl_request($this->postfields);
+        $data = array();
+        $data['type'] = 'UsernameAvailable';
+        $data['username'] = $params['username'];
+        return $this->curl_request($data);
+    }
+
+    public function create_or_update_order($params)
+    {
+        $data = array();
+        $this->cart = new Cart();        
+        $user = new User();
+        $order_number = $this->cart->getOrderNumber();
+
+        if ( $order_number == false ){
+            $order_number = json_decode($this->create_order($user->getUserName()), true);
+            $order_number = $order_number['Result']['id'];
+            $this->cart->set_order_number($order_number);
+        }
+
+        $params['order'] = $order_number;
+        if ( isset($params['gift_card_number']) )
+        {
+            $result = json_decode( $this->process_gift_card( $params['gift_card_number'] ) );
+            if ( $result->error )
+                return $result;
+        }
+
+        $this->update_user(array('customer' => $params['details'], 'username' => $user->getUserName()));
+        $this->update_order($order_number, $params);
+        $this->add_products_to_order($order_number, $this->cart->get_products_from_cart());
+
+        return $this->get_order($order_number);
+    }
+
+    public function add_products_to_order($order_id, $params)
+    {
+        $data = array();
+        foreach ($params as $product) 
+        {
+            if ( $product['product_quantity'] == 0 )
+                continue;
+            
+            $data['type'] = 'SetOrderProduct';
+            $data['order'] = $order_id;
+            $data['product'] = $product['productId'];
+            $data['quantity'] = $product['product_quantity'];
+            $this->curl_request($data);
+        }
     }
 
     public function create_order($username) // use this to create placeholder for order
     {
-        $this->postfields['type'] = 'CreateOrder';
-
-        $this->postfields['shippingName'] = 'NewOrder';
-        $this->postfields['username'] = $username;
-        return $this->curl_request($this->postfields);
+        $data = array();
+        $data['type'] = 'CreateOrder';
+        $data['username'] = $username;
+        return $this->curl_request($data);
     }
 
     public function set_order_product($params)
     {
-        $this->postfields['type'] = 'SetOrderProduct';
-        $this->postfields['order'] = $params['order'];
-        $this->postfields['product'] = $params['product'];
-        $this->postfields['quantity'] = $params['quantity'];
-        return $this->curl_request($this->postfields);
+        $data = array();
+        $data['type'] = 'SetOrderProduct';
+        $data['order'] = $params['order'];
+        $data['product'] = $params['product'];
+        $data['quantity'] = $params['quantity'];
+        return $this->curl_request($data);
+    }
+
+    public function remove_product($params)
+    {
+        $data = array();
+        $data['type'] = 'SetOrderProduct';
+        $data['order'] = $params['order'];
+        $data['product'] = $params['productId'];
+        $data['quantity'] = $params['product_quantity'];
+        return $this->curl_request($data);
     }
 
     public function get_order($order_id)
     {
-        $this->postfields['type'] = 'GetOrder';
-        $this->postfields['order'] = $order_id;
-        return $this->curl_request($this->postfields);
+        $data = array();
+        $data['type'] = 'GetOrder';
+        $data['order'] = $order_id;
+        return $this->curl_request($data);
     }
 
     private function curl_request($params)

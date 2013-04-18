@@ -52,11 +52,17 @@
   height: 28px;
   display: block;
 }
+#login_bar_center ul li .login:hover {
+  cursor: pointer;
+}
 #login_bar_center ul li .logout {
   background: url("../../images/products/buttons/logout-btn.png") no-repeat;
   width: 59px;
   height: 28px;
   display: block;
+}
+#login_bar_center ul li .logout:hover {
+  cursor: pointer;
 }
 #login_bar_center ul li .member_btn {
   background: url("../../images/products/buttons/create_account_up.jpg") no-repeat;
@@ -86,7 +92,7 @@
   width: 100%;
   background-color: #333333;
   position: fixed;
-  z-index: 10;
+  z-index: 11;
 }
 /*Nav section*/
 #upper {

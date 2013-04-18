@@ -8,7 +8,8 @@ SolleApp.factory('Catalog', function($http){
     };
 });
 
-SolleApp.factory('orderService', function($http){
+SolleApp.factory('orderService', function($http, basket){
+    var orderHasBeenTotaled = false;
     return {
         createOrder : function(username, items){
             return $http.post(path + "?action=create_order", {'username' : username}).then(function(response){
@@ -25,10 +26,8 @@ SolleApp.factory('orderService', function($http){
             return response.data;
           });
         },
-        updateCart : function(username, items){
-            return $http.post(path + "?action=update_cart", {'username' : username, 'items' : items}).then(function(response){
-                // console.log(response);
-            });
+        updateCart : function(items){
+            $http.post(path + "?action=update_cart", {'items' : items});
         },
         completeOrder: function(details,total, payment){
             return $http.post(path + "?action=complete_order", {'details' :details, 'total': total, 'payment' : payment}).then(function(response){
@@ -44,9 +43,13 @@ SolleApp.factory('orderService', function($http){
         },
         calculateTotals : function(gift_card_number, details){
             return $http.post(path + "?action=calculate_totals", {'gift_card_number' : gift_card_number, 'details' : details}).then(function(response){
-                //console.log(response);
+                orderHasBeenTotaled = true;
                 return response.data;
+
             });
+        },
+        orderHasBeenTotaled : function(){
+            return orderHasBeenTotaled;
         }
     };
 });
@@ -72,12 +75,13 @@ SolleApp.factory('basket', function($http){
                 basket[item.productId] = {
                      type : item
                  };
-                 count += 1;
+                count += 1;
             }
         },
         remove : function(item){
             count -= 1; //basket[item.type.productId].quantity;
             delete basket[item.productId];
+            item.product_quantity = 0; // set quantity to 0 for call to api
             $http.post(path + "?action=remove_from_cart", item );
         },
         clear : function(){
@@ -91,9 +95,16 @@ SolleApp.factory('loginService', function($http){
     var logged_in;
     var usertype = {};
     var user = {};
-    var $scope = angular.element(document).scope();
 
     return {
+        init : function(){
+            return $http.get(path + "?action=check_authorized").then(function(response){
+                user = response.data;
+                logged_in = response.data.status;
+                usertype = response.data.usertype;
+                // return response.data;
+            });
+        },
         login : function(username, password){
             var user = {'username' : username, 'password' : password };
             return $http.post(path + "?action=login", {'user' : user}).then(function(response){
@@ -117,7 +128,6 @@ SolleApp.factory('loginService', function($http){
             return $http.get(path + "?action=check_authorized").then(function(response){
                 var data = response.data;
                 logged_in = data.status;
-
                 user = data.user;
                 usertype = data.usertype;
                 return data;
@@ -127,9 +137,9 @@ SolleApp.factory('loginService', function($http){
             return logged_in;
         },
         logout : function(){
-            return $http.get(path +"?action=logout").then(function(response){
-                return response;
-            });
+            $http.get(path +"?action=logout");
+            logged_in = false;
+
         },
         getUser : function(){
             return user;
@@ -179,6 +189,15 @@ SolleApp.factory('membershipService', function($http){
             return $http.post(path + "?action=update_customer", {"customer":user, "username" : username}).then(function(response){
                 return response.data.Result;
             });
+        },
+        becomeMember : function(){
+             Modal('.become_member', '#become_member');
+             console.log("CRAP");
+        },
+        getMember : function(username){
+            return $http.post(path + "?action=get_user", {"username" : username}).then(function(response){
+                return response.data;
+            });
         }
     };
 });
@@ -194,6 +213,20 @@ SolleApp.factory('sessionManager', function($http){
             return $http.get(path + "?action=get_shipping_details").then(function(response){
                 return response;
             });
+        }
+    }
+});
+
+SolleApp.factory('messageManager', function($http){
+    return {
+        showError : function(message){
+            new Messi(message, {title: 'There was an error', titleClass: 'anim error', buttons: [{id: 0, label: 'Close', val: 'X'}]});
+        },
+        showInfo : function(message){
+            new Messi(message, {title: 'Update Cart', titleClass: 'info', buttons: [{id: 0, label: 'Close', val: 'X'}]});
+        },
+        alert : function(message){
+            Messi.alert(message);
         }
     }
 });

@@ -13,7 +13,6 @@
 
       case 'get_products':
         $user_type = $user->getUserType();
-
         if ( $user_type['name'] == 'Member' || $user_type['id'] >= 10)
           echo $orbsix->get_products(true);
         else
@@ -30,7 +29,6 @@
           $user = json_decode( $orbsix->get_user($params['user']['username']), true); // user
           $userTypes = json_decode( $orbsix->get_user_types(),true);
           $type = array();
-
           foreach ($userTypes['Result'] as $key => $value)
           {
             if ( $user['Result']['userType'] == $value['id'] )
@@ -41,7 +39,7 @@
           // update cart to pricing for logged in user
           if ( ($type['name'] == 'Member' || $type['id'] >= 10) && count($_SESSION['cart']) > 0)
           {
-            $cart->update_cart_pricing($orbsix->get_products(true));
+            $cart->update_cart_pricing(json_decode($orbsix->get_products(true),true));
           }
           // set variables in session for authentication
           $_SESSION['authenticated'] = array('status' => 'true', 'username'=> $params['user']['username'], 'usertype' => $type, 'user' => $user['Result']);
@@ -50,7 +48,6 @@
         {
           $_SESSION['authenticated'] = array('status' => 'false');
         }
-
         echo $response;
       break;
 
@@ -103,7 +100,14 @@
 
       case 'get_order' :
         $order_number = $cart->getOrderNumber();
-        echo $orbsix->get_order($order_number);
+        if ( $order_number )
+        {
+          echo $orbsix->get_order($order_number);
+        }
+        else
+        {
+          echo json_encode(false);
+        }
       break;
 
       case 'submit_payment' :
@@ -132,34 +136,7 @@
 
       case 'calculate_totals':
         $params = json_decode(file_get_contents("php://input"), true);
-        $order_number = $cart->getOrderNumber();
-        $params['order'] = $order_number;
-
-        if ( isset($params['gift_card_number']) )
-        {
-          $result = json_decode( $orbsix->process_gift_card( $params['gift_card_number'] ), true );
-          if ( $result['error'] ){
-            echo json_encode($result);
-            return;
-          }
-        }
-
-        if ( ! is_null($order_number) )
-        {
-          $update_response = json_decode( $orbsix->update_order($order_number, $params), true );
-          if ( isset($update_response['Result']['updateSuccess']) && $update_response['Result']['updateSuccess'] == true )
-          {
-            echo $orbsix->get_order($order_number);
-          }
-          else
-          {
-            echo json_encode(array('error'=> 'Something went wrong while updating your order. Please try again.'));
-          }
-        }
-        else
-        {
-          echo json_encode(array('error'=> 'Unable to find order.'));
-        }
+        echo $orbsix->create_or_update_order($params);
       break;
 
       case 'complete_order':
@@ -221,7 +198,16 @@
 
       case 'remove_from_cart':
         $params = json_decode(file_get_contents("php://input"), true);
-        echo $cart->remove_from_cart($params);
+        $cart->remove_from_cart($params);
+        $order_id = $cart->getOrderNumber();
+
+        if ( $order_id )
+        {
+          $params['order'] = $order_id;
+          $orbsix->remove_product($params);
+        }
+        
+        
       break;
 
       case 'logout':

@@ -5,27 +5,28 @@
 
         <?php include 'includes/blocks/login_bar.php'; ?>
         <?php include 'includes/blocks/nav.php'; ?>
-        <div id="content">
-            <div class="columns" ng-controller="CartCtrl" class="ng-cloak" ng-cloak>
-                <div class="ng-cloak" ng-cloak>
-                    <div class="create_account" style="<?php echo $authenticated['status'] == 'true' ? 'display:none;': '' ; ?>">
+        <div id="content" ng-cloak>
+            <div class="columns" ng-controller="CartCtrl" >
+                <div ng-cloak>
+                    <div ng-controller="MembershipCtrl" class="create_account" ng-hide="loginService.is_logged_in()" ng-cloak>
                         <img src="<?php echo $base_path; ?>/images/products/cart/create-account.png" style="float:left;"/>
                         <h1>In order to purchase Solle Naturals products you first must create an account and login!</h1>
                         <p>
                             Also, did you know you could be saving 15% on this order by becoming a Member and that any purchase of $50 or more automatically qualifies you for Member status?
                         </p>
-                        <a href="#" class="links member" ng-click="becomeMember($event)">Create an Account</a> |
-                        <a href="#" class="links" id="member_register" ng-click="becomeMember($event)">Become a Member |</a>
-                        <a href="#" ng-click="auth($event,'login')">Login</a>
+                        <a href="javascript:void(0);" class="links member" ng-click="becomeMember($event)">Create an Account</a> |
+                        <a href="javascript:void(0);" class="links" id="member_register" ng-click="becomeMember($event)">Become a Member</a>
+                        <!-- <a href="javascript:void(0);" ng-click="auth($event,'login')">Login</a> -->
                     </div>
-                    <div class="create_account" ng-show="<?php echo $authenticated['status'] == 'true' && ($authenticated['usertype']['name'] != 'Member' && $authenticated['usertype']['id'] < 10 ); ?>" ng-cloak>
+                    <div ng-controller="MembershipCtrl" class="create_account"
+                        ng-show="loginService.is_logged_in() && loginService.getUserType().name != 'Member'" ng-cloak>
                         <img src="<?php echo $base_path; ?>/images/products/membership/upgrade.png" style="float:left;"/>
                         <h1>Did you know...</h1>
                         <p>
                             Did you know that you could be saving 15% on this order by becoming a Solle Member? <br />
                             Plus, membership is INCLUDED when you spend more than $50!
                         </p>
-                        <a href="#" class="links member" ng-click="becomeMember($event)" >Upgrade Today</a> |
+                        <a href="javascript:void(0);" class="links member" ng-click="becomeMember($event)" >Upgrade Today</a> |
                         <a href="/comp_plan.php" class="links" id="member_register">Learn More</a>
                     </div>
 
@@ -46,8 +47,8 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr ng-repeat="product in items" class="ng-cloak">
-                                    <td><img src="<?php echo $base_path; ?>/images/products/buttons/delete.png" ng-click="remove(product)" remove-with-fade-in-directive/></td>
+                                <tr ng-repeat="product in items" class="ng-cloak" >
+                                    <td><img src="<?php echo $base_path; ?>/images/products/buttons/delete.png" ng-click="remove($event,product)" remove-with-fade-in-directive/></td>
                                     <td>{{product.name}}</td>
                                     <td>{{product.retailPrice}}</td>
                                     <td><input type="text" class="product_quantity" ng-model="product.product_quantity"></td>
@@ -59,10 +60,13 @@
                             <ul>
                                 <li><span>Subtotal</span> {{total() | currency}}</li>
                             </ul>
-                            <button ng-click="UpdateCart($event, items)" class="<?php echo $authenticated['status'] == 'true' ? '' : 'overlay'; ?>" ng-disabled="loginService.is_logged_in() == false">Update Cart</button>
+                            <button ng-click="UpdateCart($event, items)" 
+                                ng-class="{overlay: loginService.is_logged_in() == false}"
+                                ng-disabled="loginService.is_logged_in() == false" >Update Cart</button>
                         </div>
                     </div>
-                    <div id="billing" equal="heights" class="<?php echo $authenticated['status'] == 'true' ? '' : 'overlay'; ?>">
+                    <div id="billing" equal="heights" 
+                        ng-class="{overlay: loginService.is_logged_in() == false}">
                         <div class="details shipping">
                             <h2>Shipping Details</h2>
                             <form name="details_form">
@@ -240,25 +244,26 @@
                                     <br>
                                     <div class="gift_cart_form">
                                         <label for="gift_cart">Gift Card</label>
-                                        <input type="text" name="gift_cart" id="gift_cart" ng-model="gift_card_number" class="<?php echo $authenticated['status'] == 'true' ? '' : 'overlay'; ?>" <?php echo $authenticated['status'] == 'true' ? '' : 'disabled'; ?>/>
-                                        <!-- <button ng-click="UseGiftCard($event, gift_card_number)" id="gift_card" class="<?php echo $authenticated['status'] == 'true' ? '' : 'overlay'; ?>" <?php echo $authenticated['status'] == 'true' ? '' : 'disabled'; ?>>Update Amount</button> -->
+                                        <input type="text" name="gift_cart" id="gift_cart" ng-model="gift_card_number" 
+                                        ng-class="{overlay: loginService.is_logged_in() == false}"
+                                        ng-disabled="loginService.is_logged_in() == false" />
                                     </div>
                                 </fieldset>
                             </form>
                         </div>
                     </div>
                     <div id="calculate">
-                        <button ng-click="CaclulateTotals($event,gift_card_number,details)"
-                            class="<?php echo $authenticated['status'] == 'true' ? '' : 'overlay'; ?>"
+                        <button ng-click="CalculateTotals($event,gift_card_number,details)"
+                            ng-class="{overlay: loginService.is_logged_in() == false}"
                             ng-disabled="details_form.$invalid || shipping_method.$invalid || payment_method.$invalid"
-                            id="calculate"
-                            ng-hide="finalize">
+                            ng-hide="finalize"
+                            id="calculate">
                             Calculate Total
                         </button>
                     </div>
                     <div class="totals" ng-show="finalize">
                         <ul >
-                            <li>{{total() | currency}} (USD)</li>
+                            <li>{{order.total - order.shipping - order.tax - discount()| currency}} (USD)</li>
                             <li>{{order.shipping | currency}} (USD)</li>
                             <li>{{order.tax | currency}} (USD)</li>
                             <li>{{discount() | currency}} (USD)</li>
@@ -275,12 +280,10 @@
                         <button id="complete_order"
                             ng-click="CompleteOrder($event, details, order.total, payment)"
                             ng-disabled="details_form.$invalid || shipping_method.$invalid || payment_method.$invalid"
-                            class="<?php echo $authenticated['status'] == 'true' ? '' : 'overlay'; ?>">
+                            ng-class="{overlay: loginService.is_logged_in() == false}">
                             <img src="<?php echo $base_path; ?>images/products/buttons/complete_order.png" />
                         </button>
                     </div>
                 </div>
-
-                <p ng-show="basket.count() == 0" class="ng-cloak" style="padding-top:20px;">Nothing here to checkout!</p>
             </div>
         <?php include 'includes/blocks/footer.php'; ?>

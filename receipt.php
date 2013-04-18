@@ -44,7 +44,7 @@
                     <h3>Shipping Method</h3>
                     <span>{{ shippingType() }}</span>
                     <h3>Payment Method</h3>
-                    <span>Credit Card:  ***********{{order.payments.account.substr(11,4)}}</span>
+                    <span>Credit Card:  ************{{order.payments.account.substr(12,4)}}</span>
                 </div>
                 <div class="column column_right">
                     <h3>Totals</h3>
@@ -56,7 +56,7 @@
                         <li class="total">Totals</li>
                     </ul>
                     <ul>
-                        <li>{{ total() | currency }} (USD)</li>
+                        <li>{{ order.total - order.shipping - order.tax - disount() | currency }} (USD)</li>
                         <li>{{ order.shipping | currency }} (USD)</li>
                         <li>{{ discount() | currency }} (USD)</li>
                         <li>{{order.tax | currency }} (USD)</li>

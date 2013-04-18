@@ -11,6 +11,7 @@
 <script src="<?php echo $base_path; ?>store/js/modal.js"></script>
 <script src="<?php echo $base_path; ?>store/js/scripts.js"></script>
 <script src="<?php echo $base_path; ?>store/js/store.js"></script>
+<script src="<?php echo $base_path; ?>store/js/vendor/messi.min.js"></script>
 
 <script src="<?php echo $base_path; ?>store/js/vendor/bootstrap.min.js"></script>
 

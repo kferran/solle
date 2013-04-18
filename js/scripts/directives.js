@@ -25,6 +25,7 @@ SolleApp.directive("removeWithFadeInDirective", function() {
         });
     };
 });
+
 // SolleApp.directive("modal", function(){
 //     return {
 //         restrict : 'A',

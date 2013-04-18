@@ -13,12 +13,17 @@ class Cart {
     }
 
     public function add_item($item) {
+
         if ($this->cart_exists())
         {
             if (array_key_exists($item['productId'], $_SESSION['cart']))
+            {
                 $_SESSION['cart'][$item['productId']]['product_quantity'] += $item['product_quantity'];
+            }                
             else
+            {
                 $_SESSION['cart'][$item['productId']] = $item;
+            }
         }
         else
         {
@@ -29,11 +34,7 @@ class Cart {
 
     public function remove_from_cart($item)
     {
-        if (array_key_exists($item['productId'], $_SESSION['cart']))
-        {
-            unset($_SESSION['cart'][$item['productId']]);
-            return true;
-        }
+        unset($_SESSION['cart'][$item['productId']]);
     }
 
     public function clear_cart()
@@ -46,20 +47,17 @@ class Cart {
     public function update_cart_pricing($items) // update pricing after user has logged in that is member or above
     {
         $current_cart = $this->get_cart();
-        $this->orbsix = new Orbsix();
-        $order_id = $this->getOrderNumber();
-
-        foreach (json_decode($items,true) as $item_key => $item_value)
+        foreach ( $items as $item_key => $item_value)
         {
             foreach ($item_value as $product_key => $product_value)
             {
                 foreach ($current_cart['cart'] as $cart_key => $cart_value)
                 {
-                    if ( $cart_value['name'] == $product_value['name'] )
+                    if ( $cart_value['name'] == $product_value['name'] && $cart_value['productId'] != $product_value['productId'])
                     {
-                        $this->orbsix->set_order_product(array('order' => $order_id, 'product' => $product_value['productId'], 'quantity' => $product_value['product_quantity'])); // updates orbsix cart so that session and cart are synced
-                        $this->add_item($product_value); // add new items at logged in user rate
                         $this->remove_from_cart($cart_value); // remove items from non logged in user
+                        $product_value['product_quantity'] = $cart_value['product_quantity']; // make sure quantity stays the same
+                        $this->add_item($product_value); // add new items at logged in user rate
                     }
                 }
             }
@@ -70,6 +68,11 @@ class Cart {
     {
         foreach ($params['items'] as $key => $item)
         {
+            if ( $item['product_quantity'] == 0 ){
+                $this->remove_from_cart($item);
+                continue;
+            }
+            
             if (array_key_exists($item['productId'], $_SESSION['cart']))
                 $_SESSION['cart'][$item['productId']]['product_quantity'] = $item['product_quantity'];
             else
@@ -144,7 +147,12 @@ class Cart {
         }
     }
 
-    private function set_order_number($order)
+    public function get_products_from_cart()
+    {
+        return $_SESSION['cart'];
+    }
+
+    public function set_order_number($order)
     {
         $_SESSION['orderid'] = $order;
     }
@@ -165,14 +173,10 @@ class Cart {
 
     public function getOrderNumber()
     {
-        if ($this->cart_exists() && $this->has_items())
-        {
-            if ( isset($_SESSION['orderid']) )
-                return $_SESSION['orderid'];
-            else
-                return null;
-        }
-        else
-            return array('cart' => 0, 'size' => 0);
+        return isset($_SESSION['orderid']) ? $_SESSION['orderid'] : false;
+        // if (  )
+        //     return $_SESSION['orderid'];
+        // else
+        //     return false;    
     }
 }
