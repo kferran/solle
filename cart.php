@@ -256,12 +256,12 @@
                         <button ng-click="CalculateTotals($event,gift_card_number,details)"
                             ng-class="{overlay: loginService.is_logged_in() == false}"
                             ng-disabled="details_form.$invalid || shipping_method.$invalid || payment_method.$invalid"
-                            ng-hide="finalize"
+                            ng-hide="orderService.orderHasBeenTotaled()"
                             id="calculate">
                             Calculate Total
                         </button>
                     </div>
-                    <div class="totals" ng-show="finalize">
+                    <div class="totals" ng-show="orderService.orderHasBeenTotaled()">
                         <ul >
                             <li>{{order.total - order.shipping - order.tax - discount()| currency}} (USD)</li>
                             <li>{{order.shipping | currency}} (USD)</li>

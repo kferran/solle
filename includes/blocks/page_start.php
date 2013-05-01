@@ -1,6 +1,6 @@
 <!-- <link rel="stylesheet" type="text/css" href="/store/css/bootstrap.min.css"/> -->
-<?php $base_path = 'http://lightsandcolors.com/solle/'; ?>
-<?php //$base_path = 'http://solle.dev/'; ?>
+<?php //$base_path = 'http://lightsandcolors.com/solle/'; ?>
+<?php $base_path = 'http://solle.dev/'; ?>
 <?php //$base_path = 'https://www.sollenaturals.com/'; ?>
 <link rel="stylesheet" type="text/css" href="<?php echo $base_path; ?>css/micro_clear_fix.css"/>
 <link rel="stylesheet" type="text/css" href="<?php echo $base_path; ?>css/css_reset.css"/>

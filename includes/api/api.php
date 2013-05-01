@@ -206,13 +206,24 @@
           $params['order'] = $order_id;
           $orbsix->remove_product($params);
         }
-        
-        
       break;
 
       case 'logout':
         unset($_SESSION['authenticated']);
         unset($_SESSION['orderid']);
         echo json_encode(array('status' => 'false')); // login status false
+      break;
+
+      case 'set_mentor_session':
+       $params = json_decode(file_get_contents("php://input"), true);
+       $_SESSION['mentorId'] = $params['mentorId'];
+      break;
+
+      case 'get_mentor_session' :
+        if ( isset($_SESSION['mentorId']) ){
+          echo json_encode($_SESSION['mentorId']);
+        }else{
+          echo json_encode(false);
+        }
       break;
   }

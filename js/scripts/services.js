@@ -79,10 +79,11 @@ SolleApp.factory('basket', function($http){
             }
         },
         remove : function(item){
-            count -= 1; //basket[item.type.productId].quantity;
-            delete basket[item.productId];
-            item.product_quantity = 0; // set quantity to 0 for call to api
-            $http.post(path + "?action=remove_from_cart", item );
+            return $http.post(path + "?action=remove_from_cart", item ).then(function(response){
+                count -= 1; //basket[item.type.productId].quantity;
+                delete basket[item.productId];
+                item.product_quantity = 0; // set quantity to 0 for call to api    
+            });
         },
         clear : function(){
             count = 0;
@@ -137,9 +138,9 @@ SolleApp.factory('loginService', function($http){
             return logged_in;
         },
         logout : function(){
-            $http.get(path +"?action=logout");
-            logged_in = false;
-
+            return $http.get(path +"?action=logout").then(function(response){
+                logged_in = false;    
+            });            
         },
         getUser : function(){
             return user;
@@ -170,7 +171,7 @@ SolleApp.factory('statesService', function($http){
     };
 });
 
-SolleApp.factory('membershipService', function($http){
+SolleApp.factory('membershipService', function($http, basket, $rootScope){
     return {
         register : function(user){
             return $http.post(path + "?action=create_customer", { "customer": user });
@@ -190,31 +191,12 @@ SolleApp.factory('membershipService', function($http){
                 return response.data.Result;
             });
         },
-        becomeMember : function(){
-             Modal('.become_member', '#become_member');
-             console.log("CRAP");
-        },
         getMember : function(username){
             return $http.post(path + "?action=get_user", {"username" : username}).then(function(response){
                 return response.data;
             });
         }
     };
-});
-
-SolleApp.factory('sessionManager', function($http){
-    return {
-        storeShippingDetails : function(info){
-            return $http.post(path + "?action=store_shipping_details", {"details": info}).success(function(response){
-                console.log(response);
-            });
-        },
-        getShippingDetails : function(){
-            return $http.get(path + "?action=get_shipping_details").then(function(response){
-                return response;
-            });
-        }
-    }
 });
 
 SolleApp.factory('messageManager', function($http){
@@ -229,4 +211,29 @@ SolleApp.factory('messageManager', function($http){
             Messi.alert(message);
         }
     }
+});
+
+SolleApp.factory('mentorManager', function($http){
+    return {
+        check_for_mentor : function(){
+            this.get_mentor().then(function(response){
+                if ( response === '' || 'false'){
+                    var current_url = window.location.href;    
+                    if ( window.location.href.indexOf('sponsor') == -1 ){
+                        window.location.href = "http://onesolle.com/redirect_with_sponsor.php?url=" + current_url; //https://www.sollenaturals.com";
+                    }
+                    var results = new RegExp('[\\?&]sponsor=([^&#]*)').exec(window.location.href);
+                    if ( results ){
+                        $http.post(path + "?action=set_mentor_session", {"mentorId" : results[1] });
+                    }
+                }
+            });
+        },
+        get_mentor : function(){
+            return $http.get(path + "?action=get_mentor_session").then(function(response){
+                var mentorId = response.data;
+                return mentorId.replace(/"/g, ''); // remove quotes around int that are returned from the api
+            });
+        }
+    };
 });

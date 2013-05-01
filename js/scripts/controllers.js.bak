@@ -14,7 +14,7 @@ var ProductsCtrl = function($scope, $http, Catalog, basket, membershipService){
     };
 };
 
-var MembershipCtrl = function($scope, $http, $location,countriesService, membershipService, loginService, basket, messageManager, mentorManager){
+var MembershipCtrl = function($scope, $http, countriesService, membershipService, loginService, basket,messageManager){
     $scope.customer = {};
     $scope.loginService = loginService;
     $scope.mentor = {};
@@ -34,16 +34,10 @@ var MembershipCtrl = function($scope, $http, $location,countriesService, members
     countriesService.get().then(function(response){
         $scope.countries = response.data.Result;
     });
-    mentorManager.get_mentor().then(function(response){
-        $scope.mentor_name = response;
-    });
 
    $scope.becomeMember = function($event){
         $event.preventDefault();
         Modal('.become_member', '#become_member');
-        // mentorManager.get_mentor().then(function(response){
-        //     $scope.mentor_name = response;
-        // });
 
         basket.get().then(function(response){
             var sum = 0;
@@ -144,8 +138,7 @@ var MembershipCtrl = function($scope, $http, $location,countriesService, members
                 new Messi('You must purchase at least $50 in product to become a member.', 
                     {
                         title: 'Update Cart', titleClass: 'info', buttons: [{id: 0, label: 'Ok', val: 'Y'}], callback: function() { 
-                            var url = window.location.href;
-                            if ( url.search('store/store.php') == -1 ){
+                            if ( window.location.href != base_path + 'store/store.php'){
                                 document.location.href = base_path + 'store/store.php';
                             }
                     $scope.close(); 
@@ -165,7 +158,7 @@ var MembershipCtrl = function($scope, $http, $location,countriesService, members
 
 };
 
-var CartCtrl = function($scope, $http, basket,countriesService, orderService,  statesService, loginService,messageManager){
+var CartCtrl = function($scope, $http, basket,countriesService, orderService,  statesService, loginService, sessionManager,messageManager){
     $scope.basket = basket;
     $scope.loginService = loginService;
     $scope.orderService = orderService;
@@ -189,8 +182,7 @@ var CartCtrl = function($scope, $http, basket,countriesService, orderService,  s
     
     $scope.checkCart = function(){
         basket.get().then(function(response){
-            var url = window.location.href;
-            if ( response === 0 && url.search('store/cart.php') > 0 ){
+            if ( response === 0 && window.location.href == base_path + 'store/cart.php'){
                 document.location.href = base_path + 'store/store.php';
             }
             $scope.items = response;
@@ -245,17 +237,17 @@ var CartCtrl = function($scope, $http, basket,countriesService, orderService,  s
     };
 
     $scope.remove = function($event,item){
-        basket.remove(item).then(function(response){
-            if ( orderService.orderHasBeenTotaled() ){
-                $scope.CalculateTotals($event, $scope.gift_card_number, $scope.details);
-            }
-            $scope.$watch('basket.count()', function(newValue, oldValue,scope){
-                var url = window.location.href;
-                if ( newValue === 0 && url.search('store/cart.php') > 0 ){
-                    document.location.href = base_path + 'store/store.php';
-                }
-            });    
+        basket.remove(item);
+        if ( orderService.orderHasBeenTotaled() ){
+            $scope.CalculateTotals($event, $scope.gift_card_number, $scope.details);
+        }
+        $scope.$watch('basket.count()', function(newValue, oldValue,scope){
+            if ( newValue == 0 && window.location.href == base_path + 'store/cart.php')
+                document.location.href = base_path + 'store/store.php';
+            // else
+            //     document.location.reload();
         });
+
     };
 
     $scope.total = function () {
@@ -374,18 +366,19 @@ var ReceiptCtrl = function($scope, $http, $timeout, basket,orderService, loginSe
 
 };
 
-var AppCtrl = function($scope, $http, $location, loginService,messageManager, membershipService, mentorManager){
+var AppCtrl = function($scope, $http, loginService,messageManager, membershipService){
     $scope.loginService = loginService;
     $scope.membershipService = membershipService;
     $scope.password_reset = false;
     $scope.bad_username = false;
     $scope.fatal = false;
-    
-    mentorManager.check_for_mentor();
 
     $scope.init = function(){
-        loginService.init();        
+        loginService.init();
     }
+
+
+
     $scope.login = function(){
         loginService.login($scope.username,$scope.password).then(function(response){
             if ( response == 'true' ){
@@ -418,15 +411,12 @@ var AppCtrl = function($scope, $http, $location, loginService,messageManager, me
 
     $scope.auth = function($event,auth_status){
         $event.preventDefault();
-        console.log(auth_status);
-        if (auth_status === false ){
+        if (auth_status == false ){
             Modal('.sign_in','#login_modal');
         }else{
-            loginService.logout().then(function(response){
-                document.location.reload();    
-            });
+            loginService.logout();
             // loginService.init();
-            
+            document.location.reload();
         }
     };
 
@@ -437,4 +427,8 @@ var AppCtrl = function($scope, $http, $location, loginService,messageManager, me
     };
 
     $scope.init();
+
+    // $scope.$watch('loginService.getUser()', function(scope,newValue, oldValue){
+    //     console.log(newValue);
+    // });
 };

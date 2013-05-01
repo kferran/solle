@@ -14,8 +14,16 @@
                 <a href="javascript:void(0);" ng-hide="loginService.is_logged_in()" class="member_btn" ng-click="becomeMember($event)"></a>
             </li>
             <li ng-controller="AppCtrl">
-                <span ng-class="{logout: loginService.is_logged_in(), login: loginService.is_logged_in() == false}" 
-                ng-click="auth($event, loginService.is_logged_in())"></span>
+                <div ng-switch on="loginService.is_logged_in()">
+                    <div ng-switch-when="true">
+                        <span class="logout" ng-click="auth($event, true)"></span>
+                    </div>
+                    <div ng-switch-when="false">
+                        <span class="login" ng-click="auth($event, false)"></span>
+                    </div>
+                </div>
+                <!-- <span ng-class="{logout: loginService.is_logged_in() === true, login: loginService.is_logged_in() === false}" 
+                ng-click="auth($event, loginService.is_logged_in())"></span> -->
             </li>
             <li style="margin-top:6px;">
                 <a href="https://solle.orbsix.com/login.php" >Back Office</a>
