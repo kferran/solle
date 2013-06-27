@@ -1,8 +1,7 @@
 <?php
 class Orbsix{
     private $url = 'https://sollestaging.orbsix.com/rest/v3/index.php?transactionkey=Eqb41V5mEpgVUm6d58QjPjj5WrlRoziv';
-    //private $url = 'https://solle.orbsix.com/rest/v3/index.php?transactionkey=0a85fn7zSLoY0rXo4VifJ4bo89P2W317JJ8FiDW2Qzwv1mvko9kk7CFd4ch0zK60';
-    // private $key = 'Eqb41V5mEpgVUm6d58QjPjj5WrlRoziv';
+        
     private $cart;
     private $relationshipTypes = array(1, 2); //// 1 - SmartPlan Tree, 2 - Mentor Tree, 3 - Member Tree
 
